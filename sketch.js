@@ -29,6 +29,8 @@ function setup() {
 
 function draw(){
   background(50, 55, 100);
+
+  // state text function
   if (state === 1){
     console.log('dit is de state ' + state);
     textSize(30);
@@ -58,7 +60,7 @@ function startRec(){
   else if (state === 2) {
     soundFile.play(); // play the result!
     // save(soundFile, 'mySound.wav');
-    state++;
+    state = 0;
   }
 } 
 
