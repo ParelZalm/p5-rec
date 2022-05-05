@@ -26,12 +26,11 @@ function setup() {
   recorder.setInput(mic);
   // initiate soundfile to record
   soundFile = new p5.SoundFile();
-  
 }
 
-function draw(){
+// function draw(){
 
-}
+// }
 
 function startRec(){
   if (state === 0 && mic.enabled) {
@@ -39,10 +38,9 @@ function startRec(){
     recorder.record(soundFile);
     textSize(30);
     fill('red'); 
-    text('recording...', w/2, h/2);
-    
-    state++;
-    
+    text('recording...', w/2 - 20, h/2);
+    console.log('hee state is nu 0')
+    state++; 
   }
   else if (state === 1) {
     background(50, 55, 100);
@@ -51,15 +49,16 @@ function startRec(){
     recorder.stop();
     textSize(30);
     fill('green'); 
-    text('done...', w/2, h/2)
+    text('done, click to save', w/2 - 60, h/2)
+    console.log('hee state is nu 1')
     state++;
   }
   else if (state === 2) {
     soundFile.play(); // play the result!
-    save(soundFile, 'mySound.wav');
-    state++;
+    // save(soundFile, 'mySound.wav');
+    console.log('hee state is nu 2')
+    state = 2;
   }
-
 } 
 
 
