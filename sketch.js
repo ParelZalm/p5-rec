@@ -2,6 +2,7 @@ let mic, recorder, soundFile;
 let state = 0;
 let numberFile = 0;
 let bubbles = []
+let easing = 0.05;
 
 
 let w = window.innerWidth;
@@ -36,19 +37,21 @@ function draw(){
   // state text function
   if (state === 1){
     textSize(30);
+    noStroke();
     fill('red'); 
     text('recording...', w/2 - 60, h/2);
   }
   else if (state === 2){
     textSize(30);
+    noStroke();
     fill('green'); 
     text('done, click to save', w/2 - 60, h/2)
   }
 
   for (let i = 0; i < bubbles.length; i++) {
-    bubbles[i].move()
-    bubbles[i].show()
-
+    bubbles[i].move();
+    bubbles[i].show();
+    bubbles[i].read(mouseX, mouseY, i);
   }
   if (bubbles.length > 20) {
     bubbles.splice(0, 1)
@@ -95,14 +98,20 @@ class Bubble {
     this.sound = numberFile + '.wav';
   }
   move(){
-    this.x = this.x + random(-1,2);
-    this.y = this.y + random(-1,2);
+    this.x = this.x += random(-5,5);
+    this.y = this.y += random(-5,5);
   }
   show(){
     stroke('turquoise');
     strokeWeight(4);
     noFill();
     ellipse(this.x, this.y, this.r * 2);
+  }
+  read(pixelX, pixelY, i){
+    let distance = dist(pixelX, pixelY, this.x, this.y);
+    if (distance < this.r && mouseIsPressed === true){
+      console.log(bubbles[i].sound);
+    }
   }
 }
 
