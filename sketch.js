@@ -8,6 +8,8 @@ function setup() {
   //canvas setup
   canvas = createCanvas(w, h);
   background(50, 55, 100);
+  pg = createGraphics(300, 300);
+  
 
   // button with function record
 	button = createButton('click me');
@@ -24,23 +26,32 @@ function setup() {
   recorder.setInput(mic);
   // initiate soundfile to record
   soundFile = new p5.SoundFile();
+  
+}
+
+function draw(){
+
 }
 
 function startRec(){
   if (state === 0 && mic.enabled) {
     // record to our p5.SoundFile
     recorder.record(soundFile);
-    let div = createDiv('Recording!');
-    div.style('font-size', '80px');
-    div.position(w/2, h/2);
+    textSize(30);
+    fill('red'); 
+    text('recording...', w/2, h/2);
+    
     state++;
+    
   }
   else if (state === 1) {
-    background(0,255,0);
+    background(50, 55, 100);
     // stop recorder and
     // send result to soundFile
     recorder.stop();
-    text('Stopped', 20, 20);
+    textSize(30);
+    fill('green'); 
+    text('done...', w/2, h/2)
     state++;
   }
   else if (state === 2) {
