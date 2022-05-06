@@ -49,7 +49,7 @@ function draw(){
   }
 
   for (let i = 0; i < bubbles.length; i++) {
-    bubbles[i].move();
+    // bubbles[i].move();
     bubbles[i].show();
     bubbles[i].read(mouseX, mouseY, i);
   }
@@ -92,8 +92,9 @@ function pushBubble(numberFile){
 
 class Bubble {
   constructor(x, y, r){
-    this.x = x;
-    this.y = y;
+    let ran = random(0,400);
+    this.x = ran;
+    this.y = ran;
     this.r = r;
     this.sound = numberFile + '.wav';
   }
