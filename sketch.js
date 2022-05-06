@@ -130,7 +130,7 @@ class Bubble {
 
     let distance = dist(pixelX, pixelY, this.x, this.y);
     if (distance < this.r){
-      console.log(bubbles[i]);
+      // console.log(bubbles[i]);
       console.log(i);
       this.brightness = 255;
       // this.soundFile.play();
