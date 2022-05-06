@@ -66,8 +66,10 @@ function draw(){
   angle++;
 }
 
-function mousePressed(){
-  
+function keyTyped(){
+  if (key =! 'r'){
+    return;
+  }
   if (state === 0 && mic.enabled) {
     // record to our p5.SoundFile
     // getAudioContext().resume()
