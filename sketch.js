@@ -1,11 +1,7 @@
 let mic, recorder, soundFile;
 let state = 0;
 let numberFile = 0;
-let bubbles = []
-let easing = 0.05;
-let angle = 0;
-let xEllipse = 100;
-let yEllipse = 300;
+let bubbles = [];
 let disX = 650;
 let disY = 450;
 let thisSound;
@@ -18,13 +14,7 @@ function setup() {
   //canvas setup
   canvas = createCanvas(w, h);
   pg = createGraphics(300, 300);
-  angleMode(DEGREES);
   
-
-  // button with function record
-	// button = createButton('click me');
-  // button.position(w/2 -30, h/1.25);
-  // button.mouseClicked(startRec);
 
   //initiate mic
   mic = new p5.AudioIn();
@@ -63,14 +53,13 @@ function draw(){
   if (bubbles.length > 20) {
     bubbles.splice(0, 1)
   }
-  angle++;
 }
 
 function keyTyped(){
-  if (key =! 'r'){
-    return;
+  if (key === 'p'){
+    loop();
   }
-  if (state === 0 && mic.enabled) {
+  if (state === 0 && mic.enabled && key === 'r') {
     // record to our p5.SoundFile
     getAudioContext().resume()
     recorder.record(soundFile);
@@ -95,8 +84,8 @@ function keyTyped(){
 
 function pushBubble(numberFile){
   console.log(numberFile);
-  // let r = random(10,40);
-  let b = new Bubble(50, 100, 25)
+  let r = random(10,40);
+  let b = new Bubble(50, 100, r)
   bubbles.push(b)
 }
 
@@ -106,8 +95,6 @@ class Bubble {
     let rany = random(0,600);
     this.x = ranx;
     this.y = rany;
-    // this.x = disX + xEllipse * cos(angle);
-    // this.y = disY + yEllipse * sin(angle);
     this.r = r;
     this.brightness = 0;
     // this.sound = numberFile + '.wav';
@@ -116,30 +103,32 @@ class Bubble {
   move(){
     // this.x = this.x += random(-5,5);
     // this.y = this.y += random(-5,5);
-    // this.x = disX + xEllipse * cos(angle);
-    // this.y = disY + yEllipse * sin(angle);
+
   }
   show(){
-    stroke('turquoise');
+    stroke('125');
     strokeWeight(4);
     fill(this.brightness, 125);
     ellipse(this.x, this.y, this.r * 2);
   }
   read(pixelX, pixelY, i){
-
     let distance = dist(pixelX, pixelY, this.x, this.y);
     if (distance < this.r){
-      // console.log(bubbles[i]);
       // console.log(i);
-      this.brightness = 255;
-      // this.soundFile.play();
-      //console.log(this.soundFile);
-      return;
+      this.brightness += 25;
+      // this.r += 20;
+      thisSound = new Audio("records/" + i + ".wav");
+      // console.log(thisSound);
+      // noLoop();
+    }  else {
+      this.brightness = 125;
+    }
+    if (distance < this.r && key === 's'){
+      thisSound.play();
+      noLoop();
     }
   }
 }
-
-
 
 
 // resize canvas when browser resize
