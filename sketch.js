@@ -72,7 +72,7 @@ function keyTyped(){
   }
   if (state === 0 && mic.enabled) {
     // record to our p5.SoundFile
-    // getAudioContext().resume()
+    getAudioContext().resume()
     recorder.record(soundFile);
     console.log('state: ' + state);
     state++; 
@@ -88,7 +88,6 @@ function keyTyped(){
     saveSound(soundFile, numberFile+'.wav');
     state = 0;
     numberFile += 1;
-    console.log(numberFile)
     // function for bubbles
     pushBubble(numberFile);
   }
@@ -131,9 +130,8 @@ class Bubble {
     let distance = dist(pixelX, pixelY, this.x, this.y);
     if (distance < this.r){
       // console.log(bubbles[i]);
-      console.log(i);
+      // console.log(i);
       this.brightness = 255;
-      // this.soundFile.play();
       // this.soundFile.play();
       //console.log(this.soundFile);
       return;
