@@ -2,8 +2,6 @@ let mic, recorder, soundFile;
 let state = 0;
 let numberFile = 0;
 let bubbles = [];
-let disX = 650;
-let disY = 450;
 let thisSound;
 
 
@@ -15,6 +13,8 @@ function setup() {
   canvas = createCanvas(w, h);
   pg = createGraphics(300, 300);
   
+  // create a new amplitude analyzer
+  analyzer = new p5.Amplitude();
 
   //initiate mic
   mic = new p5.AudioIn();
@@ -53,6 +53,12 @@ function draw(){
   if (bubbles.length > 20) {
     bubbles.splice(0, 1)
   }
+  textSize(20);
+  noStroke();
+  fill('white'); 
+  text('press R to record', 30, h - 80)
+  text('press S when hovering a bubble to play', 30, h - 60)
+  text('press P after play to continue after S', 30, h - 40)
 }
 
 function keyTyped(){
@@ -61,7 +67,7 @@ function keyTyped(){
   }
   if (state === 0 && mic.enabled && key === 'r') {
     // record to our p5.SoundFile
-    getAudioContext().resume()
+    // getAudioContext().resume()
     recorder.record(soundFile);
     console.log('state: ' + state);
     state++; 
@@ -91,8 +97,8 @@ function pushBubble(numberFile){
 
 class Bubble {
   constructor(x, y, r){
-    let ranx = random(0,600);
-    let rany = random(0,600);
+    let ranx = random(300,600);
+    let rany = random(300,600);
     this.x = ranx;
     this.y = rany;
     this.r = r;
@@ -106,8 +112,6 @@ class Bubble {
 
   }
   show(){
-    stroke('125');
-    strokeWeight(4);
     fill(this.brightness, 125);
     ellipse(this.x, this.y, this.r * 2);
   }
@@ -124,8 +128,9 @@ class Bubble {
       this.brightness = 125;
     }
     if (distance < this.r && key === 's'){
-      thisSound.play();
       noLoop();
+      thisSound.play();
+      console.log('hoevaak dan')
     }
   }
 }
