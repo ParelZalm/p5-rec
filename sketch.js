@@ -3,6 +3,7 @@ let state = 0;
 let numberFile = 0;
 let bubbles = [];
 let thisSound;
+let button;
 
 
 let w = window.innerWidth;
@@ -26,10 +27,15 @@ function setup() {
   recorder.setInput(mic);
   // initiate soundfile to record
   soundFile = new p5.SoundFile();
+
+  button = createButton('Start record');
+  button.position(w/2 -30, h/1.25);
+  button.mousePressed(recordLoop);
 }
 
 function draw(){
   background(50, 55, 100);
+  frameRate(60);
 
   // state text function
   if (state === 1){
@@ -39,10 +45,10 @@ function draw(){
     text('recording...', w/2 - 60, h/2);
   }
   else if (state === 2){
-    textSize(30);
-    noStroke();
-    fill('green'); 
-    text('done, click to save', w/2 - 60, h/2)
+    // textSize(30);
+    // noStroke();
+    // fill('green'); 
+    // text('done, click to save', w/2 - 60, h/2)
   }
 
   for (let i = 0; i < bubbles.length; i++) {
@@ -61,22 +67,24 @@ function draw(){
   text('press P after play to continue after S', 30, h - 40)
 }
 
-function keyTyped(){
-  if (key === 'p'){
-    loop();
-  }
-  if (state === 0 && mic.enabled && key === 'r') {
+function recordLoop(){
+  //loop();
+  if (state === 0 && mic.enabled) {
     // record to our p5.SoundFile
-    // getAudioContext().resume()
+    getAudioContext().resume()
     recorder.record(soundFile);
     console.log('state: ' + state);
     state++; 
+    button.html('stop record');
+    button.style('color', '#ff0000')
   }
   else if (state === 1) {
     // stop recorder and
     // send result to soundFile
     recorder.stop();
     state++;
+    button.html('save record');
+    button.style('color', 'green')
   }
   else if (state === 2) {
     soundFile.play(); // play the result!
@@ -85,6 +93,8 @@ function keyTyped(){
     numberFile += 1;
     // function for bubbles
     pushBubble(numberFile);
+    button.html('start record');
+    button.style('color', 'white');
   }
 } 
 

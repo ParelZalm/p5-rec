@@ -6,9 +6,15 @@ html, body {
 
 button {
   font-size: 2em;
-  border: 0;
-  padding: 0;
+  border: 2px solid white;
+  padding: 4px;
   color: white;
   background-color: transparent;
   cursor: pointer;
+  transition: all .3s ease;
+}
+
+button:hover {
+  background-color: white;
+  color: #323764;
 }
