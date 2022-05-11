@@ -80,8 +80,9 @@ function recordLoop(){
   }
   else if (state === 2) {
     soundFile.play(); // play the result!
-    soundFile.rate(1);
-    saveSound(soundFile, numberFile+'.wav');
+    console.log(soundFile);
+    // soundFile.rate(1);
+    save(soundFile, numberFile+'.wav');
     console.log('how many')
     state = 0;
     numberFile += 1;
