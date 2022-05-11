@@ -4,6 +4,7 @@ let numberFile = 0;
 let bubbles = [];
 let thisSound;
 let button;
+let delFile;
 // log height and width
 let w = window.innerWidth;
 let h = window.innerHeight;
@@ -53,12 +54,10 @@ function draw(){
     bubbles[i].move();
     bubbles[i].show();
     bubbles[i].read(mouseX, mouseY, i);
+    // bubbles[i].del(mouseX, mouseY, i);
   }
   if (bubbles.length > 20) {
     bubbles.splice(0, 1)
-  }
-  if (bubbles.mouseOver == true){
-    plsWork();
   }
 }
 
@@ -130,6 +129,9 @@ class Bubble {
       noStroke();
       fill('white'); 
       text('Click to Play', pixelX + 10, pixelY + 5);
+      fill('red'); 
+      textSize(12);
+      text('Press any Key to delete', pixelX + 10, pixelY + 25);
     }  else {
       this.brightness = 125;
     }
@@ -139,6 +141,13 @@ class Bubble {
       makeDelay();
     }
   }
+  // del(pixelX, pixelY, i){
+  //   let distance = dist(pixelX, pixelY, this.x, this.y);
+  //   if (distance < this.r && keyIsPressed === true){
+  //     noLoop();
+  //     bubbles.splice(i);
+  //   }
+  // }
 }
 
 // define delay
