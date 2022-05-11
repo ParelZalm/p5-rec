@@ -49,7 +49,7 @@ function draw(){
     fill('red'); 
     text('recording...', w/2 - 60, h/2);
   }
-
+  // loop through bubbles and add when invoked
   for (let i = 0; i < bubbles.length; i++) {
     bubbles[i].move();
     bubbles[i].show();
@@ -100,14 +100,14 @@ function pushBubble(numberFile){
 }
 
 class Bubble {
-  constructor(x, y, r){
+  constructor(x, y, r, wav){
     let ranx = random(300,600);
     let rany = random(300,600);
     this.x = ranx;
     this.y = rany;
     this.r = r;
     this.brightness = 0;
-    this.soundFile = soundFile;
+    this.soundFile = numberFile + '.wav';
   }
   move(){
     // this.x = this.x += random(-5,5);
