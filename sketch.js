@@ -56,12 +56,10 @@ function draw(){
     bubbles[i].read(mouseX, mouseY, i);
     // bubbles[i].del(mouseX, mouseY, i);
   }
-  if (bubbles.length > 20) {
+  if (bubbles.length > 10) {
     bubbles.splice(0, 1)
   }
 }
-
-
 
 function recordLoop(){
   if (state === 0 && mic.enabled) {
@@ -82,7 +80,9 @@ function recordLoop(){
   }
   else if (state === 2) {
     soundFile.play(); // play the result!
+    soundFile.rate(1);
     saveSound(soundFile, numberFile+'.wav');
+    console.log('how many')
     state = 0;
     numberFile += 1;
     // function for bubbles
@@ -103,6 +103,7 @@ class Bubble {
   constructor(x, y, r, wav){
     let ranx = random(300,600);
     let rany = random(300,600);
+    
     this.x = ranx;
     this.y = rany;
     this.r = r;
