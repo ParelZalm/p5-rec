@@ -4,8 +4,7 @@ let numberFile = 0;
 let bubbles = [];
 let thisSound;
 let button;
-
-
+// log height and width
 let w = window.innerWidth;
 let h = window.innerHeight;
 
@@ -27,15 +26,20 @@ function setup() {
   recorder.setInput(mic);
   // initiate soundfile to record
   soundFile = new p5.SoundFile();
+  soundFile.rate(1);
 
   button = createButton('Start record');
   button.position(w/2 -30, h/1.25);
   button.mousePressed(recordLoop);
 }
 
+function plsWork(){
+  console.log('itworks')
+}
+
 function draw(){
   background(50, 55, 100);
-  frameRate(60);
+  // frameRate(24);
 
   // state text function
   if (state === 1){
@@ -43,12 +47,6 @@ function draw(){
     noStroke();
     fill('red'); 
     text('recording...', w/2 - 60, h/2);
-  }
-  else if (state === 2){
-    // textSize(30);
-    // noStroke();
-    // fill('green'); 
-    // text('done, click to save', w/2 - 60, h/2)
   }
 
   for (let i = 0; i < bubbles.length; i++) {
@@ -59,21 +57,18 @@ function draw(){
   if (bubbles.length > 20) {
     bubbles.splice(0, 1)
   }
-  textSize(20);
-  noStroke();
-  fill('white'); 
-  text('press R to record', 30, h - 80)
-  text('press S when hovering a bubble to play', 30, h - 60)
-  text('press P after play to continue after S', 30, h - 40)
+  if (bubbles.mouseOver == true){
+    plsWork();
+  }
 }
 
+
+
 function recordLoop(){
-  //loop();
   if (state === 0 && mic.enabled) {
     // record to our p5.SoundFile
     getAudioContext().resume()
     recorder.record(soundFile);
-    console.log('state: ' + state);
     state++; 
     button.html('stop record');
     button.style('color', '#ff0000')
@@ -113,13 +108,11 @@ class Bubble {
     this.y = rany;
     this.r = r;
     this.brightness = 0;
-    // this.sound = numberFile + '.wav';
     this.soundFile = soundFile;
   }
   move(){
     // this.x = this.x += random(-5,5);
     // this.y = this.y += random(-5,5);
-
   }
   show(){
     fill(this.brightness, 125);
@@ -128,21 +121,34 @@ class Bubble {
   read(pixelX, pixelY, i){
     let distance = dist(pixelX, pixelY, this.x, this.y);
     if (distance < this.r){
-      // console.log(i);
+      // on hover change brightness
       this.brightness += 25;
-      // this.r += 20;
+      // define audio let
       thisSound = new Audio("records/" + i + ".wav");
-      // console.log(thisSound);
-      // noLoop();
+      // text center
+      textSize(20);
+      noStroke();
+      fill('white'); 
+      text('Click to Play', pixelX + 10, pixelY + 5);
     }  else {
       this.brightness = 125;
     }
-    if (distance < this.r && key === 's'){
+    if (distance < this.r && mouseIsPressed === true){
       noLoop();
       thisSound.play();
-      console.log('hoevaak dan')
+      makeDelay();
     }
   }
+}
+
+// define delay
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve ,ms));
+// delay function 
+async function makeDelay(){
+  await delay(500);
+  console.log('loop() started again');
+  await delay(250);
+  loop();
 }
 
 
